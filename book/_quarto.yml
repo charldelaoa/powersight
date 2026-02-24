@@ -9,7 +9,7 @@ book:
   date: today
   chapters:
     - index.ipynb
-    
+    - setup_guide.qmd
 bibliography: references.bib
 
 format:

@@ -1,0 +1,54 @@
+project:
+  name: PowerSight
+  version: "1.0.0"
+  description: Energy Consumption Analysis & Forecasting Platform
+
+database:
+  sqlite_url: "sqlite:///database/energy.db"
+  active: "sqlite"
+
+paths:
+  raw_data: "data/raw/household_power_consumption.txt"
+  processed_data: "data/processed/energy_clean.parquet"
+  interim_data: "data/interim/"
+  model_artifacts: "models/artifacts/"
+  reports: "reports/"
+  figures: "reports/figures/"
+
+data:
+  datetime_col: "datetime"
+  target_regression: "global_active_power"
+  target_classification: "anomaly_label"
+  missing_threshold: 0.30
+  outlier_std_threshold: 3.0
+  anomaly_classes:
+    0: "Normal"
+    1: "Spike"
+    2: "Fault"
+    3: "Outage"
+
+features:
+  rolling_windows: [6, 12, 24, 48]
+  lag_periods: [1, 6, 12, 24]
+  forecast_horizon: 24
+
+models:
+  random_state: 42
+  test_size: 0.2
+  classifier:
+    n_estimators: 100
+    max_depth: 10
+    class_weight: "balanced"
+  forecaster:
+    n_estimators: 200
+    max_depth: 8
+
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_classifier: "energy-anomaly-classification"
+  experiment_forecaster: "energy-consumption-forecasting"
+
+streamlit:
+  page_title: "PowerSight"
+  page_icon: "⚡"
+  layout: "wide"

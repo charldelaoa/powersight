@@ -1,0 +1,285 @@
+# Developer Setup Guide
+
+This guide documents every step required to set up the **PowerSight** project
+from scratch on a new machine. Follow the steps in order.
+
+## Prerequisites
+
+Before starting, make sure you have the following installed on your machine:
+
+| Tool | Version | Purpose |
+|---|---|---|
+| Python | 3.12.0 | Programming language |
+| pyenv | latest | Python version manager |
+| Git | 2.x+ | Version control |
+| Git LFS | latest | Large file storage |
+| Quarto | 1.3.336+ | Book publishing |
+| VS Code | latest | Code editor |
+
+### Check your versions
+
+Open your terminal and run:
+
+```bash
+python --version
+git --version
+quarto --version
+```
+
+---
+
+## Step 1 — Configure Git
+
+Tell Git who you are. Run these commands once on your machine:
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+```
+
+Verify it worked:
+
+```bash
+git config --global --list
+```
+
+You should see your name and email printed back.
+
+---
+
+## Step 2 — Clone the Repository
+
+```bash
+git clone https://github.com/charldelaoa/powersight.git
+cd powersight
+```
+
+---
+
+## Step 3 — Create the Virtual Environment
+
+This project uses **pyenv** to manage Python versions and virtual environments.
+Never install project libraries globally — always use a dedicated environment.
+
+```bash
+pyenv virtualenv 3.12.0 powersight
+pyenv local powersight
+```
+
+The second command creates a `.python-version` file in the project root.
+Every time you `cd` into this folder, pyenv activates the environment automatically.
+
+Verify it worked:
+
+```bash
+pyenv version
+# Expected: powersight (set by .../powersight/.python-version)
+```
+
+---
+
+## Step 4 — Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs all libraries defined in `requirements.txt`. It will take a few minutes
+on first run.
+
+Verify key libraries installed correctly:
+
+```bash
+python -c "import pandas, sklearn, mlflow, streamlit, plotly; print('All good')"
+```
+
+---
+
+## Step 5 — Set Up Environment Variables
+
+The project uses a `.env` file for sensitive configuration like database credentials.
+This file is never committed to Git.
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and fill in your values:
+
+```bash
+code .env
+```
+
+For local development with SQLite (Week 1–2), you don't need to fill in the
+PostgreSQL credentials yet.
+
+---
+
+## Step 6 — Download the Dataset
+
+The raw dataset is not stored in Git (it's 126 MB). It is downloaded
+programmatically in the first notebook.
+
+Open and run `book/index.ipynb` — the download cell will fetch the dataset
+from the UCI Machine Learning Repository and save it to `data/raw/`.
+
+Alternatively, download it manually from:
+[UCI Household Electric Power Consumption](https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption)
+
+And place the file at:
+
+```
+data/raw/household_power_consumption.txt
+```
+
+---
+
+## Step 7 — Verify the Project Structure
+
+After setup, your project should look like this:
+
+```
+powersight/
+├── book/                        # Quarto book (published documentation)
+│   ├── _quarto.yml
+│   ├── index.ipynb
+│   └── ...
+├── configs/
+│   └── config.yaml              # Central configuration file
+├── data/
+│   ├── raw/                     # Original data (not in Git)
+│   ├── interim/                 # Mid-pipeline snapshots
+│   └── processed/               # Cleaned data
+├── database/
+│   └── queries/                 # SQL query files
+├── models/
+│   └── artifacts/               # Saved model files
+├── notebooks/                   # Experimentation notebooks
+├── reports/
+│   └── figures/                 # Exported plots
+├── src/                         # Source code modules
+│   ├── data/
+│   ├── eda/
+│   ├── features/
+│   └── models/
+├── streamlit_app/               # Streamlit dashboard
+│   ├── pages/
+│   └── components/
+├── tests/                       # Unit tests
+├── .env.example                 # Environment variables template
+├── .gitignore
+├── .python-version              # pyenv environment pin
+├── Makefile                     # Shortcut commands
+└── requirements.txt
+```
+
+---
+
+## Step 8 — Open VS Code
+
+Always open the project as a folder, not individual files:
+
+```bash
+code .
+```
+
+Install the recommended VS Code extensions:
+
+- **Python** (Microsoft)
+- **Jupyter** (Microsoft)
+- **YAML** (Red Hat)
+- **GitLens** (GitKraken)
+
+---
+
+## Step 9 — Render the Book Locally
+
+To preview the Quarto book in your browser:
+
+```bash
+quarto render book/
+open book/_book/index.html
+```
+
+---
+
+## Daily Workflow
+
+Every time you work on the project, follow this rhythm:
+
+### Start of session
+```bash
+cd ~/Desktop/AI/projects/powersight  # navigate to project
+pyenv version                         # verify environment is active
+git pull                              # get latest changes
+```
+
+### End of session
+```bash
+git add .
+git commit -m "describe what you did"
+git push
+```
+
+### Useful Makefile shortcuts
+
+```bash
+make install          # install all dependencies
+make test             # run all tests
+make app              # launch Streamlit app
+```
+
+---
+
+## Git Workflow
+
+This project follows a simple Git workflow:
+
+| Command | When to use |
+|---|---|
+| `git status` | Check what has changed |
+| `git add .` | Stage all changes |
+| `git commit -m "message"` | Save a snapshot |
+| `git push` | Upload to GitHub |
+| `git pull` | Download latest changes |
+| `git log` | View commit history |
+
+### Commit message conventions
+
+Write commit messages that describe **what** you did and **why**:
+
+```bash
+# Good
+git commit -m "add data profiling notebook with missing value analysis"
+git commit -m "fix path resolution bug in config loader"
+git commit -m "add rolling window features for 6h and 24h windows"
+
+# Bad
+git commit -m "update"
+git commit -m "fix"
+git commit -m "changes"
+```
+
+---
+
+## Troubleshooting
+
+### pyenv environment not activating
+```bash
+unset PYENV_VERSION
+pyenv local powersight
+```
+
+### Config file not found in notebook
+Make sure you are running the notebook from inside its own folder.
+All config paths use `../` to navigate up one level from `notebooks/` or `book/`.
+
+### Library conflict during pip install
+Check the error message — it will tell you which two libraries conflict.
+Downgrade the one with the stricter version requirement in `requirements.txt`.
+
+### Quarto render fails
+Make sure `references.bib` exists in the `book/` folder:
+```bash
+touch book/references.bib
+```
