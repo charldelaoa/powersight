@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+*.egg
+venv/
+.env
+
+# Data
+data/raw/
+data/processed/
+data/interim/
+
+# Models
+models/artifacts/
+*.pkl
+
+# MLflow
+mlruns/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
