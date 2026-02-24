@@ -1,0 +1,24 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "PowerSight"
+  subtitle: "Energy Consumption Analysis & Forecasting Platform"
+  author: "Carlos Reyes"
+  date: today
+  chapters:
+    - index.ipynb
+    
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    code-fold: true        # readers can show/hide code
+    code-tools: true       # adds copy button to code blocks
+    toc: true              # table of contents on every page
+    toc-depth: 3
+    number-sections: true
+
+jupyter: python3
