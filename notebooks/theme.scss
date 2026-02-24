@@ -1,0 +1,162 @@
+/*-- scss:defaults --*/
+
+// Base colors
+$body-bg: #12151e;
+$body-color: #e8eaf0;
+$link-color: #4ade80;
+$heading-color: #ffffff;
+
+// Code blocks
+$code-bg: #1a1e2e;
+$code-color: #e8eaf0;
+
+// Sidebar
+$sidebar-bg: #0e1018;
+$sidebar-color: #8892a4;
+$sidebar-hl: #4ade80;
+
+// Table of contents
+$toc-color: #8892a4;
+$toc-active-color: #4ade80;
+
+// Borders
+$border-color: #1e2436;
+
+// Fonts
+$font-family-sans-serif: "Inter", sans-serif;
+$font-family-monospace: "JetBrains Mono", monospace;
+$font-size-root: 16px;
+
+/*-- scss:rules --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+h1, h2, h3, h4 {
+  color: $heading-color;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid #1e2436;
+  padding-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1.4rem;
+  color: #4ade80;
+  margin-top: 2rem;
+}
+
+h3 {
+  color: #e8eaf0;
+  font-size: 1.1rem;
+}
+
+p {
+  line-height: 1.8;
+  font-size: 0.975rem;
+  color: #e8eaf0;
+}
+
+li {
+  line-height: 1.8;
+  font-size: 0.975rem;
+  color: #e8eaf0;
+}
+
+pre {
+  background-color: #1a1e2e;
+  border: 1px solid #1e2436;
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+
+code {
+  color: #4ade80;
+  background-color: #1a1e2e;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.85em;
+}
+
+table {
+  border-color: #1e2436;
+  font-size: 0.9rem;
+}
+
+thead {
+  background-color: #1a1e2e;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+tbody tr {
+  color: #e8eaf0;
+}
+
+tbody tr:hover {
+  background-color: #1a1e2e;
+}
+
+blockquote {
+  border-left: 3px solid #4ade80;
+  background-color: #1a1e2e;
+  padding: 12px 20px;
+  border-radius: 0 8px 8px 0;
+  color: #8892a4;
+  font-style: normal;
+  margin: 1.5rem 0;
+}
+
+.navbar {
+  background-color: #0e1018 !important;
+  border-bottom: 1px solid #1e2436;
+}
+
+.navbar-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff !important;
+}
+
+.sidebar {
+  border-right: 1px solid #1e2436;
+}
+
+.sidebar-item-text {
+  font-size: 0.875rem;
+  color: #8892a4;
+}
+
+.mermaid {
+  background-color: #1a1e2e;
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+::selection {
+  background-color: #4ade8033;
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #12151e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e2436;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4ade80;
+}

@@ -10,11 +10,13 @@ book:
   chapters:
     - index.ipynb
     - setup_guide.qmd
+    - 01_data_profiling.ipynb
+
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme: [darkly, theme.scss]
     code-fold: true        # readers can show/hide code
     code-tools: true       # adds copy button to code blocks
     toc: true              # table of contents on every page
