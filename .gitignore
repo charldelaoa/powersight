@@ -27,5 +27,5 @@ mlruns/
 Thumbs.db
 
 # Quarto
-book/_book/
+notebooks/_book/
 .quarto/
